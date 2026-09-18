@@ -15,7 +15,7 @@ $page_url = 'https://vigisolar.com/';
   <?php include 'includes/header.php'; ?>
 
   <!-- ==================== SECCIÓN PRINCIPAL (HERO) ==================== -->
-  <section class="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 bg-[#0a0a0a]">
+  <section class="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 bg-[#0a0a0a] bg-cover bg-center bg-no-repeat" style="background-image: url('/assets/img/hero/servicios_bg.png');">
     <!-- Fondo Decorativo Abstracto -->
     <div class="absolute top-0 right-0 w-1/2 h-full bg-accent rounded-l-[100px] opacity-10 hidden lg:block"></div>
     
@@ -23,9 +23,9 @@ $page_url = 'https://vigisolar.com/';
       
       <!-- Contenido Izquierdo (Texto y Botones) -->
       <div class="w-full lg:w-1/2 lg:pr-12 text-center lg:text-left mb-16 lg:mb-0">
-        <h1 class="text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold text-white leading-[1.1] mb-6 tracking-tight mt-10">
-          Energía Limpia, <br>
-          <span class="text-accent">Ahorro Inteligente.</span>
+        <h1 class="text-5xl lg:text-7xl font-extrabold font-display leading-tight mb-6 tracking-tight text-white">
+          Energía Limpia, <br/><span class="text-accent relative inline-block">Ahorro Inteligente</span>
+          <span class="sr-only"> con Kits de Paneles Solares</span>
         </h1>
         
         <p class="text-gray-400 text-lg lg:text-xl font-light max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed">
@@ -40,28 +40,20 @@ $page_url = 'https://vigisolar.com/';
       </div>
       
       <!-- Contenido Derecho (Imagen Decorativa) -->
-      <div class="w-full lg:w-1/2 relative">
-        <div class="relative w-full max-w-md mx-auto">
-          <!-- Cuadro Decorativo Superior -->
-          <div class="absolute -top-6 -left-6 w-24 h-24 border-4 border-accent rounded-3xl opacity-50"></div>
-          <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-accent rounded-full z-0 opacity-20"></div>
+      <div class="w-full lg:w-1/2 relative mt-16 lg:mt-0">
+        <div class="relative w-full max-w-xl mx-auto lg:-mr-10">
           
-          <!-- Imagen Principal -->
-          <div class="relative z-10 w-full aspect-[4/5] overflow-hidden rounded-[2rem] rounded-tr-none shadow-2xl border-4 border-gray-800 bg-gray-900 flex items-center justify-center">
-             <img src="/assets/img/hero/hero_solar.jpg" alt="Paneles Solares" class="w-full h-full object-cover">
+          <!-- Cuadros Decorativos (Líneas y acentos) -->
+          <div class="absolute -top-6 -left-6 w-32 h-32 border-4 border-accent rounded-3xl opacity-50 z-0 hidden lg:block"></div>
+          <div class="absolute -bottom-8 -right-8 w-40 h-40 bg-accent rounded-full z-0 opacity-20"></div>
+
+          <!-- Imagen Principal de la Casa en Caja -->
+          <div class="relative z-10 w-full overflow-hidden rounded-[2rem] shadow-2xl border-4 border-gray-800 bg-gray-900 flex items-center justify-center aspect-square">
+             <img src="/assets/img/hero/hero_house.jpg" alt="Casa con Paneles Solares" class="w-full h-full object-cover">
           </div>
-          
-          <!-- Etiqueta Flotante -->
-          <div class="absolute bottom-4 left-4 sm:bottom-10 sm:-left-8 lg:-left-20 bg-white p-4 rounded-2xl shadow-xl z-20 flex items-center space-x-4">
-            <div class="bg-red-100 p-3 rounded-full text-accent">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-            </div>
-            <div>
-              <p class="text-sm font-bold text-gray-900">Energía 100%</p>
-              <p class="text-xs text-gray-500">Renovable</p>
-            </div>
-          </div>
+
         </div>
+      </div>
       </div>
       
     </div>

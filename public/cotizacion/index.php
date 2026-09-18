@@ -78,13 +78,8 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
                 </div>
               </div>
               
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                  <input type="tel" name="Teléfono" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Teléfono*" required>
-                </div>
-                <div>
-                  <input type="email" name="Email" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Correo Electrónico*" required>
-                </div>
+              <div class="w-full">
+                <input type="tel" name="Teléfono" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Teléfono*" required>
               </div>
 
               <div>
@@ -109,7 +104,11 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
                   <?php endif; ?>
                 </div>
                 <div>
-                  <input type="number" name="Anos" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Años a Financiar (Ej. 1)*" min="1" required>
+                  <select name="Anos" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded appearance-none" required>
+                    <option value="" disabled selected>Años a Financiar*</option>
+                    <option value="1">1 Año</option>
+                    <option value="2">2 Años</option>
+                  </select>
                 </div>
               </div>
               

@@ -1,15 +1,15 @@
 <?php
-$page_title = $page_title ?? 'Vigitec Panamá - Sistemas de Seguridad Premium';
-$page_description = $page_description ?? 'Vigitec Panamá - Especialistas en sistemas de seguridad premium. Instalación de cámaras, alarmas, control de acceso y mantenimiento con soporte 24/7.';
-$page_keywords = $page_keywords ?? 'sistemas de seguridad panamá, cámaras de seguridad, instalación de cámaras, alarmas panamá, control de acceso, mantenimiento de seguridad';
-$page_url = $page_url ?? 'https://vigitecpanama.com/';
+$page_title = $page_title ?? 'Vigi-Solar - Kits y Sistemas de Energía Solar';
+$page_description = $page_description ?? 'Vigi-Solar - Especialistas en sistemas de energía solar. Instalación de kits fotovoltaicos y soluciones de ahorro energético para tu hogar o negocio.';
+$page_keywords = $page_keywords ?? 'sistemas de energía solar panamá, paneles solares, instalación de paneles, kits solares, ahorro energético, energía renovable';
+$page_url = $page_url ?? 'https://vigisolar.com/';
 ?>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title><?= htmlspecialchars($page_title) ?></title>
 <meta name="description" content="<?= htmlspecialchars($page_description) ?>" />
 <meta name="keywords" content="<?= htmlspecialchars($page_keywords) ?>" />
-<meta name="author" content="Vigitec Panamá" />
+<meta name="author" content="Vigi-Solar" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="<?= htmlspecialchars($page_url) ?>" />
 
@@ -18,17 +18,17 @@ $page_url = $page_url ?? 'https://vigitecpanama.com/';
 <meta property="og:url" content="<?= htmlspecialchars($page_url) ?>" />
 <meta property="og:title" content="<?= htmlspecialchars($page_title) ?>" />
 <meta property="og:description" content="<?= htmlspecialchars($page_description) ?>" />
-<meta property="og:image" content="https://vigitecpanama.com/assets/img/hero/servicios_bg.png" />
+<meta property="og:image" content="https://vigisolar.com/assets/img/hero/hero_solar.jpg" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content="<?= htmlspecialchars($page_url) ?>" />
 <meta property="twitter:title" content="<?= htmlspecialchars($page_title) ?>" />
 <meta property="twitter:description" content="<?= htmlspecialchars($page_description) ?>" />
-<meta property="twitter:image" content="https://vigitecpanama.com/assets/img/hero/servicios_bg.png" />
+<meta property="twitter:image" content="https://vigisolar.com/assets/img/hero/hero_solar.jpg" />
 
 <!-- Preload del fondo principal para evitar parpadeos -->
-<link rel="preload" as="image" href="/assets/img/hero/servicios_bg.png">
+<link rel="preload" as="image" href="/assets/img/hero/hero_solar.jpg">
 
 <!-- Fuentes: Inter para texto limpio, Plus Jakarta Sans para títulos -->
 <link rel="preconnect" href="https://fonts.googleapis.com">

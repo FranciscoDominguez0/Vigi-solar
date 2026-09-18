@@ -47,10 +47,12 @@ function enviarCorreoResend(string $apiKey, string $destinatario, string $respon
     $datos = [
         'from' => 'onboarding@resend.dev', 
         'to' => $destinatario,
-        'reply_to' => $responderA,
         'subject' => $asunto,
         'html' => $htmlMensaje
     ];
+    if (!empty($responderA)) {
+        $datos['reply_to'] = $responderA;
+    }
     
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -176,7 +178,7 @@ function generarTemplateCorreo(array $cliente, string $servicio, ?array $finanza
             <tr><th>Cédula:</th><td>{$cliente['cedula']}</td></tr>
             <tr><th>Dirección:</th><td>{$cliente['direccion']}</td></tr>
             <tr><th>Teléfono:</th><td>{$cliente['telefono']}</td></tr>
-            <tr><th>Correo:</th><td>{$cliente['email']}</td></tr>
+
         </table>
         
         {$detalleFinancieroHTML}
@@ -204,8 +206,7 @@ try {
         'nombre'    => limpiarDato('Nombre'),
         'cedula'    => limpiarDato('Cédula'),
         'telefono'  => limpiarDato('Teléfono'),
-        'email'     => limpiarDato('Email'),
-        'direccion' => limpiarDato('Dirección')
+        'direccion' => limpiarDato('Dirección'),
     ];
     
     $servicio = limpiarDato('Servicio');
@@ -226,7 +227,7 @@ try {
     $correoDestino = getenv('SMTP_DESTINATION') ?: 'info@vigisolar.com';
     $asunto = 'NUEVA SOLICITUD DE COTIZACIÓN - Vigi-Solar';
     
-    if (enviarCorreoResend($resendApiKey, $correoDestino, $cliente['email'], $asunto, $htmlMensaje)) {
+    if (enviarCorreoResend($resendApiKey, $correoDestino, '', $asunto, $htmlMensaje)) {
         enviarRespuestaJSON(true);
     } else {
         enviarRespuestaJSON(false, 'Error al enviar a través de Resend. Inténtelo más tarde.');
