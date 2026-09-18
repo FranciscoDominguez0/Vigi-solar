@@ -85,8 +85,8 @@ $page_url = 'https://vigisolar.com/';
         
         <!-- Kit 1: 4.96 kWp -->
         <div class="bg-[#1a1a1a] border border-gray-800 rounded-2xl overflow-hidden hover:border-accent transition-colors duration-500 group flex flex-col md:flex-row h-full items-stretch">
-          <div class="w-full md:w-2/5 h-64 md:h-auto">
-            <img src="/assets/img/hero/kit_1.jpeg" alt="Kit 1 (4.96 kWp)" class="w-full h-full object-cover">
+          <div class="w-full md:w-2/5">
+            <img src="/assets/img/hero/kit_1.jpeg" alt="Kit 1 (4.96 kWp)" class="w-full h-auto md:h-full object-cover">
           </div>
           <div class="p-8 flex flex-col w-full md:w-3/5">
             <div class="mb-6">
@@ -106,38 +106,33 @@ $page_url = 'https://vigisolar.com/';
           </div>
         </div>
 
-        <!-- Kit 2: 7.44 kWp (RECOMENDADO) -->
-        <div class="bg-[#240a0c] border-2 border-accent rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(230,57,70,0.25)] flex flex-col md:flex-row-reverse h-full items-stretch relative transform md:scale-[1.02] transition-transform duration-500 z-10">
-          <div class="absolute top-0 right-0 bg-accent text-white text-sm font-bold uppercase tracking-widest py-2 px-6 rounded-bl-2xl rounded-tr-2xl z-20 shadow-lg flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
-            Nuestra Recomendación
+        <!-- Kit 2: 7.44 kWp -->
+        <div class="bg-[#1a1a1a] border border-gray-800 rounded-2xl overflow-hidden hover:border-accent transition-colors duration-500 group flex flex-col md:flex-row-reverse h-full items-stretch">
+          <div class="w-full md:w-2/5">
+            <img src="/assets/img/hero/kit_2.jpeg" alt="Kit 2 (7.44 kWp)" class="w-full h-auto md:h-full object-cover">
           </div>
-          <div class="w-full md:w-2/5 h-64 md:h-auto relative">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#240a0c] to-transparent z-10 md:hidden"></div>
-            <img src="/assets/img/hero/kit_2.jpeg" alt="Kit 2 (7.44 kWp)" class="w-full h-full object-cover">
-          </div>
-          <div class="p-8 md:p-10 flex flex-col w-full md:w-3/5 relative z-20">
+          <div class="p-8 flex flex-col w-full md:w-3/5">
             <div class="mb-6 mt-4 md:mt-0">
-              <h3 class="text-3xl font-extrabold text-white font-display mb-2">Kit 2 <span class="text-2xl font-medium text-gray-500 ml-2">7.44 kWp</span></h3>
-              <p class="text-accent font-semibold text-xl">Ahorro hasta $220.00 / mes (941 kWh)</p>
+              <h3 class="text-2xl font-bold text-white font-display mb-2">Kit 2 <span class="text-xl font-medium text-gray-500 ml-2">7.44 kWp</span></h3>
+              <p class="text-accent font-semibold text-lg">Ahorro hasta $220.00 / mes (941 kWh)</p>
             </div>
-            <p class="text-gray-300 mb-6 text-base font-medium">El sistema ideal para la mayoría de los hogares. "Todo incluido" y conectado a la red. Precio desde <span class="text-3xl font-bold text-white block mt-2">$6,100.09</span></p>
-            <ul class="text-gray-300 font-medium space-y-4 mb-8 grid grid-cols-1 sm:grid-cols-2 gap-x-4">
-              <li class="flex items-center"><svg class="w-6 h-6 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 12 Paneles solares</li>
-              <li class="flex items-center"><svg class="w-6 h-6 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 3 Microinversores</li>
-              <li class="flex items-center"><svg class="w-6 h-6 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Estructura de montaje</li>
-              <li class="flex items-center"><svg class="w-6 h-6 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Medidor y equipos eléc.</li>
+            <p class="text-gray-400 mb-6 text-sm">El sistema es "todo incluido" y conectado a la red. Precio desde <strong>$6,100.09</strong>.</p>
+            <ul class="text-gray-400 font-light space-y-3 mb-8 grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+              <li class="flex items-center"><svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 12 Paneles solares</li>
+              <li class="flex items-center"><svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 3 Microinversores</li>
+              <li class="flex items-center"><svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Estructura de montaje</li>
+              <li class="flex items-center"><svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Medidor y equipos eléc.</li>
             </ul>
-            <a href="/cotizacion/?kit=Kit-7.44kWp" class="mt-auto w-full md:w-auto self-start text-center bg-accent text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-accent transition-all duration-300 shadow-[0_0_20px_rgba(230,57,70,0.5)]">
-              Cotizar este Kit Recomendado
+            <a href="/cotizacion/?kit=Kit-7.44kWp" class="mt-auto w-full md:w-auto self-start text-center bg-gray-800 text-white px-8 py-3 rounded-xl font-semibold group-hover:bg-accent group-hover:text-white transition-all duration-300 shadow-lg">
+              Cotizar este Kit
             </a>
           </div>
         </div>
 
         <!-- Kit 3: 9.92 kWp -->
         <div class="bg-[#1a1a1a] border border-gray-800 rounded-2xl overflow-hidden hover:border-accent transition-colors duration-500 group flex flex-col md:flex-row h-full items-stretch">
-          <div class="w-full md:w-2/5 h-64 md:h-auto">
-            <img src="/assets/img/hero/kit_3.jpeg" alt="Kit 3 (9.92 kWp)" class="w-full h-full object-cover">
+          <div class="w-full md:w-2/5">
+            <img src="/assets/img/hero/kit_3.jpeg" alt="Kit 3 (9.92 kWp)" class="w-full h-auto md:h-full object-cover">
           </div>
           <div class="p-8 flex flex-col w-full md:w-3/5">
             <div class="mb-6">
@@ -159,8 +154,8 @@ $page_url = 'https://vigisolar.com/';
 
         <!-- Kit 4: 12.40 kWp -->
         <div class="bg-[#1a1a1a] border border-gray-800 rounded-2xl overflow-hidden hover:border-accent transition-colors duration-500 group flex flex-col md:flex-row-reverse h-full items-stretch">
-          <div class="w-full md:w-2/5 h-64 md:h-auto">
-            <img src="/assets/img/hero/kit_4.jpeg" alt="Kit 4 (12.40 kWp)" class="w-full h-full object-cover">
+          <div class="w-full md:w-2/5">
+            <img src="/assets/img/hero/kit_4.jpeg" alt="Kit 4 (12.40 kWp)" class="w-full h-auto md:h-full object-cover">
           </div>
           <div class="p-8 flex flex-col w-full md:w-3/5">
             <div class="mb-6 mt-4 md:mt-0">
@@ -182,8 +177,8 @@ $page_url = 'https://vigisolar.com/';
 
         <!-- Kit 5: 14.88 kWp -->
         <div class="bg-[#1a1a1a] border border-gray-800 rounded-2xl overflow-hidden hover:border-accent transition-colors duration-500 group flex flex-col md:flex-row h-full items-stretch">
-          <div class="w-full md:w-2/5 h-64 md:h-auto">
-            <img src="/assets/img/hero/kit_5.jpeg" alt="Kit 5 (14.88 kWp)" class="w-full h-full object-cover">
+          <div class="w-full md:w-2/5">
+            <img src="/assets/img/hero/kit_5.jpeg" alt="Kit 5 (14.88 kWp)" class="w-full h-auto md:h-full object-cover">
           </div>
           <div class="p-8 flex flex-col w-full md:w-3/5">
             <div class="mb-6">

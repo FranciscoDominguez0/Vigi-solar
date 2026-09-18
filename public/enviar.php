@@ -1,17 +1,13 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/../config.php'; // Importar credenciales de forma segura
+require_once __DIR__ . '/../config.php';
 
 /**
- * --- FUNCIONES AUXILIARES ---
+ * --- FUNCIONES DE RESPUESTA Y UTILIDAD ---
  */
 
-/**
- * Envía una respuesta en formato JSON de forma segura y finaliza la ejecución.
- */
 function enviarRespuestaJSON(bool $exito, string $mensaje = ''): void {
-    // Prevenir que advertencias o espacios en blanco rompan la respuesta JSON
     if (ob_get_length()) {
         ob_clean();
     }
@@ -20,58 +16,42 @@ function enviarRespuestaJSON(bool $exito, string $mensaje = ''): void {
     exit;
 }
 
-/**
- * Obtiene y limpia un dato proveniente de $_POST para evitar inyecciones XSS.
- */
 function limpiarDato(string $clave): string {
-    if (!isset($_POST[$clave])) {
-        return '';
-    }
-    return trim(htmlspecialchars($_POST[$clave], ENT_QUOTES, 'UTF-8'));
+    return isset($_POST[$clave]) ? trim(htmlspecialchars($_POST[$clave], ENT_QUOTES, 'UTF-8')) : '';
 }
 
-/**
- * Verifica el token de reCAPTCHA contra la API de Google.
- */
 function verificarRecaptcha(string $respuestaRecaptcha, string $claveSecreta): bool {
     if (empty($respuestaRecaptcha) || empty($claveSecreta)) {
         return false;
     }
-
+    
     $url = 'https://www.google.com/recaptcha/api/siteverify';
     $datos = ['secret' => $claveSecreta, 'response' => $respuestaRecaptcha];
-
+    
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($datos));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
     $respuesta = curl_exec($ch);
-    
-    // Si cURL falla al conectar, asumimos verificación fallida
     if (curl_errno($ch)) {
         return false;
     }
-
+    
     $datosRespuesta = json_decode($respuesta, true);
     return isset($datosRespuesta['success']) && $datosRespuesta['success'] === true;
 }
 
-/**
- * Envía un correo electrónico utilizando la API de Resend.
- */
 function enviarCorreoResend(string $apiKey, string $destinatario, string $responderA, string $asunto, string $htmlMensaje): bool {
     $url = 'https://api.resend.com/emails';
-    
     $datos = [
-        // En producción, cambiar por un dominio propio verificado (ej. no-reply@vigitecpanama.com)
         'from' => 'onboarding@resend.dev', 
         'to' => $destinatario,
         'reply_to' => $responderA,
         'subject' => $asunto,
         'html' => $htmlMensaje
     ];
-
+    
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
@@ -80,50 +60,17 @@ function enviarCorreoResend(string $apiKey, string $destinatario, string $respon
         'Content-Type: application/json'
     ]);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($datos));
-    
     curl_exec($ch);
     $codigoHttp = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     
     return ($codigoHttp >= 200 && $codigoHttp < 300);
 }
 
-
 /**
- * --- FLUJO PRINCIPAL ---
+ * --- LÓGICA DE NEGOCIO ---
  */
 
-// Iniciar buffer para evitar salida accidental de texto
-ob_start();
-
-try {
-    // 1. Validar configuración crítica del servidor
-    $resendApiKey = getenv('RESEND_API_KEY');
-    if (empty($resendApiKey)) {
-        enviarRespuestaJSON(false, 'Error de configuración del servidor de correos.');
-    }
-
-    $claveSecretaRecaptcha = defined('RECAPTCHA_SECRET_KEY') ? RECAPTCHA_SECRET_KEY : '';
-    
-    // 2. Obtener y sanitizar datos del formulario
-    $nombre    = limpiarDato('Nombre');
-    $cedula    = limpiarDato('Cédula');
-    $telefono  = limpiarDato('Teléfono');
-    $email     = limpiarDato('Email');
-    $direccion = limpiarDato('Dirección');
-    $servicio  = limpiarDato('Servicio');
-    $anos      = (int)limpiarDato('Anos');
-    $recaptchaResponse = limpiarDato('g-recaptcha-response');
-
-    // 3. Verificaciones de seguridad (reCAPTCHA)
-    if (empty($recaptchaResponse)) {
-        enviarRespuestaJSON(false, 'Por favor, marque la casilla de "No soy un robot".');
-    }
-
-    if (!verificarRecaptcha($recaptchaResponse, $claveSecretaRecaptcha)) {
-        enviarRespuestaJSON(false, 'Verificación de seguridad fallida. Inténtelo de nuevo.');
-    }
-
-    // 4. Cálculos Matemáticos de Cotización
+function calcularFinanciamiento(string $servicio, int $anos): ?array {
     $preciosKits = [
         'Kit 1 (4.96 kWp)' => 4607.28,
         'Kit 2 (7.44 kWp)' => 6100.09,
@@ -132,38 +79,60 @@ try {
         'Kit 5 (14.88 kWp)' => 11174.65
     ];
     
-    $monto = isset($preciosKits[$servicio]) ? $preciosKits[$servicio] : 0;
+    $monto = $preciosKits[$servicio] ?? 0;
     
-    if ($monto > 0 && $anos > 0) {
-        $abono = $monto * 0.20;
-        $restante = $monto - $abono;
-        $porcentaje_recargo = 10 * $anos; 
-        $recargo = $restante * ($porcentaje_recargo / 100);
-        $total = $restante + $recargo;
-        
-        $meses = $anos * 12;
-        $quincenas = $anos * 24;
-        
-        $cuota_mensual = $total / $meses;
-        $cuota_quincenal = $total / $quincenas;
+    if ($monto <= 0 || $anos <= 0) {
+        return null;
+    }
+    
+    $abono = $monto * 0.20;
+    $restante = $monto - $abono;
+    $porcentaje_recargo = 10 * $anos; 
+    $recargo = $restante * ($porcentaje_recargo / 100);
+    $total = $restante + $recargo;
+    
+    return [
+        'monto' => $monto,
+        'anos' => $anos,
+        'abono' => $abono,
+        'restante' => $restante,
+        'porcentaje_recargo' => $porcentaje_recargo,
+        'recargo' => $recargo,
+        'total' => $total,
+        'meses' => $anos * 12,
+        'quincenas' => $anos * 24,
+        'cuota_mensual' => $total / ($anos * 12),
+        'cuota_quincenal' => $total / ($anos * 24)
+    ];
+}
+
+function generarTemplateCorreo(array $cliente, string $servicio, ?array $finanzas): string {
+    if ($finanzas) {
+        $monto = number_format($finanzas['monto'], 2);
+        $abono = number_format($finanzas['abono'], 2);
+        $restante = number_format($finanzas['restante'], 2);
+        $recargo = number_format($finanzas['recargo'], 2);
+        $total = number_format($finanzas['total'], 2);
+        $cuota_mensual = number_format($finanzas['cuota_mensual'], 2);
+        $cuota_quincenal = number_format($finanzas['cuota_quincenal'], 2);
         
         $detalleFinancieroHTML = "
             <h2>Detalle del Proyecto</h2>
             <table>
                 <tr><th>Kit Solar Elegido:</th><td>{$servicio}</td></tr>
-                <tr><th>Monto Total del Proyecto:</th><td>$" . number_format($monto, 2, '.', ',') . "</td></tr>
-                <tr><th>Plazo de Financiamiento:</th><td>{$anos} año(s)</td></tr>
-                <tr><th>Abono Inicial (20%):</th><td>$" . number_format($abono, 2, '.', ',') . "</td></tr>
-                <tr><th>Saldo a Financiar:</th><td>$" . number_format($restante, 2, '.', ',') . "</td></tr>
-                <tr><th>Recargo ($porcentaje_recargo%):</th><td>$" . number_format($recargo, 2, '.', ',') . "</td></tr>
-                <tr class='total-row'><th>Total a Pagar en Cuotas:</th><td>$" . number_format($total, 2, '.', ',') . "</td></tr>
+                <tr><th>Monto Total del Proyecto:</th><td>\${$monto}</td></tr>
+                <tr><th>Plazo de Financiamiento:</th><td>{$finanzas['anos']} año(s)</td></tr>
+                <tr><th>Abono Inicial (20%):</th><td>\${$abono}</td></tr>
+                <tr><th>Saldo a Financiar:</th><td>\${$restante}</td></tr>
+                <tr><th>Recargo ({$finanzas['porcentaje_recargo']}%):</th><td>\${$recargo}</td></tr>
+                <tr class='total-row'><th>Total a Pagar en Cuotas:</th><td>\${$total}</td></tr>
             </table>
 
             <div class='options-box'>
                 <h3 style='margin-top:0; color:#2d3748;'>Opciones de Pago</h3>
                 <table>
-                    <tr><th>Mensual ($meses cuotas):</th><td>$" . number_format($cuota_mensual, 2, '.', ',') . " / mes</td></tr>
-                    <tr><th>Quincenal ($quincenas cuotas):</th><td>$" . number_format($cuota_quincenal, 2, '.', ',') . " / quincena</td></tr>
+                    <tr><th>Mensual ({$finanzas['meses']} cuotas):</th><td>\${$cuota_mensual} / mes</td></tr>
+                    <tr><th>Quincenal ({$finanzas['quincenas']} cuotas):</th><td>\${$cuota_quincenal} / quincena</td></tr>
                 </table>
             </div>
         ";
@@ -177,9 +146,7 @@ try {
         ";
     }
 
-    // 5. Preparar el contenido del correo en HTML
-    $asunto = 'NUEVA SOLICITUD DE COTIZACIÓN - Vigi-Solar';
-    $htmlMensaje = "
+    return "
     <!DOCTYPE html>
     <html lang='es'>
     <head>
@@ -205,11 +172,11 @@ try {
 
         <h2>Datos del Cliente</h2>
         <table>
-            <tr><th>Nombre:</th><td>{$nombre}</td></tr>
-            <tr><th>Cédula:</th><td>{$cedula}</td></tr>
-            <tr><th>Dirección:</th><td>{$direccion}</td></tr>
-            <tr><th>Teléfono:</th><td>{$telefono}</td></tr>
-            <tr><th>Correo:</th><td>{$email}</td></tr>
+            <tr><th>Nombre:</th><td>{$cliente['nombre']}</td></tr>
+            <tr><th>Cédula:</th><td>{$cliente['cedula']}</td></tr>
+            <tr><th>Dirección:</th><td>{$cliente['direccion']}</td></tr>
+            <tr><th>Teléfono:</th><td>{$cliente['telefono']}</td></tr>
+            <tr><th>Correo:</th><td>{$cliente['email']}</td></tr>
         </table>
         
         {$detalleFinancieroHTML}
@@ -217,20 +184,54 @@ try {
     </body>
     </html>
     ";
+}
+
+/**
+ * --- FLUJO PRINCIPAL ---
+ */
+
+ob_start();
+
+try {
+    $resendApiKey = getenv('RESEND_API_KEY');
+    if (empty($resendApiKey)) {
+        enviarRespuestaJSON(false, 'Error de configuración del servidor de correos.');
+    }
+
+    $claveSecretaRecaptcha = defined('RECAPTCHA_SECRET_KEY') ? RECAPTCHA_SECRET_KEY : '';
+    
+    $cliente = [
+        'nombre'    => limpiarDato('Nombre'),
+        'cedula'    => limpiarDato('Cédula'),
+        'telefono'  => limpiarDato('Teléfono'),
+        'email'     => limpiarDato('Email'),
+        'direccion' => limpiarDato('Dirección')
+    ];
+    
+    $servicio = limpiarDato('Servicio');
+    $anos = (int)limpiarDato('Anos');
+    $recaptchaResponse = limpiarDato('g-recaptcha-response');
+
+    if (empty($recaptchaResponse)) {
+        enviarRespuestaJSON(false, 'Por favor, marque la casilla de "No soy un robot".');
+    }
+
+    if (!verificarRecaptcha($recaptchaResponse, $claveSecretaRecaptcha)) {
+        enviarRespuestaJSON(false, 'Verificación de seguridad fallida. Inténtelo de nuevo.');
+    }
+
+    $finanzas = calcularFinanciamiento($servicio, $anos);
+    $htmlMensaje = generarTemplateCorreo($cliente, $servicio, $finanzas);
 
     $correoDestino = getenv('SMTP_DESTINATION') ?: 'info@vigisolar.com';
-
-    // 5. Enviar el correo final
-    $envioExitoso = enviarCorreoResend($resendApiKey, $correoDestino, $email, $asunto, $htmlMensaje);
-
-    // 6. Evaluar el resultado y responder al cliente
-    if ($envioExitoso) {
+    $asunto = 'NUEVA SOLICITUD DE COTIZACIÓN - Vigi-Solar';
+    
+    if (enviarCorreoResend($resendApiKey, $correoDestino, $cliente['email'], $asunto, $htmlMensaje)) {
         enviarRespuestaJSON(true);
     } else {
         enviarRespuestaJSON(false, 'Error al enviar a través de Resend. Inténtelo más tarde.');
     }
 
 } catch (Exception $e) {
-    // Capturar cualquier error no previsto de forma silenciosa para el usuario
     enviarRespuestaJSON(false, 'Ha ocurrido un error inesperado. Inténtelo más tarde.');
 }

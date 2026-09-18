@@ -58,11 +58,12 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
             </div>
 
             <!-- Alerta Personalizada de Éxito (Toast) -->
-            <div id="custom-success-toast" class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-5 py-3 rounded-md shadow-[0_0_20px_rgba(22,163,74,0.6)] font-medium text-sm flex items-center z-50 transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px] w-11/12 md:w-auto md:max-w-md text-center">
-              <svg class="w-6 h-6 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <div id="custom-success-toast" class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-[#111111] border border-accent text-white px-6 py-4 rounded-lg shadow-red-glow font-medium text-sm flex items-center z-50 transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px] w-11/12 md:w-auto md:max-w-md text-center">
+              <div class="bg-accent/20 p-2 rounded-full mr-3">
+                <svg class="w-5 h-5 flex-shrink-0 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              </div>
               <div class="text-left">
-                <strong class="block text-base">¡Cotización Enviada!</strong>
-                <span id="custom-success-message">Hemos recibido tu solicitud exitosamente. Un especialista se pondrá en contacto a la brevedad.</span>
+                <span id="custom-success-message" class="text-[15px] font-semibold tracking-wide">¡Cotización enviada exitosamente!</span>
               </div>
             </div>
 
@@ -128,105 +129,7 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
               
             </form>
             
-            <!-- Script para Enviar Formulario sin Recargar (AJAX) -->
-            <script>
-              function showErrorToast(message) {
-                const toast = document.getElementById('custom-error-toast');
-                const toastMsg = document.getElementById('custom-error-message');
-                toastMsg.innerText = message;
-                
-                toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-                toast.classList.add('opacity-100', 'translate-y-0');
-                
-                setTimeout(() => {
-                  toast.classList.remove('opacity-100', 'translate-y-0');
-                  toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-                }, 4000);
-              }
-
-              function showSuccessToast() {
-                const toast = document.getElementById('custom-success-toast');
-                
-                toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-                toast.classList.add('opacity-100', 'translate-y-0');
-                
-                setTimeout(() => {
-                  toast.classList.remove('opacity-100', 'translate-y-0');
-                  toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-                }, 5000);
-              }
-
-              document.getElementById('cotizacion-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Verificar si el captcha fue completado antes de enviar
-                const recaptchaResponse = grecaptcha.getResponse();
-                if (recaptchaResponse.length === 0) {
-                  showErrorToast('Por favor, marque la casilla de "No soy un robot" antes de enviar la cotización.');
-                  return;
-                }
-                
-                const form = this;
-                const btn = document.getElementById('submit-btn');
-                const btnText = document.getElementById('btn-text');
-                const btnIcon = document.getElementById('btn-icon');
-                const btnSpinner = document.getElementById('btn-spinner');
-                const successMessage = document.getElementById('success-message');
-                
-                // Estado de carga (Loading)
-                btn.disabled = true;
-                btnText.innerText = 'Enviando Seguro...';
-                btnIcon.classList.add('hidden');
-                btnSpinner.classList.remove('hidden');
-                
-                // Enviar datos
-                fetch(form.action, {
-                  method: 'POST',
-                  body: new FormData(form),
-                  headers: {
-                    'Accept': 'application/json'
-                  }
-                })
-                .then(response => response.json())
-                .then(data => {
-                  if (data.success) {
-                    showSuccessToast();
-                    form.reset();
-                    grecaptcha.reset();
-                    
-                    // Restaurar botón
-                    btn.disabled = false;
-                    btnText.innerText = 'Solicitar Cotización';
-                    btnSpinner.classList.add('hidden');
-                    btnIcon.classList.remove('hidden');
-                    
-                    // Restaurar color del select
-                    const selectEl = document.getElementById('servicio-select');
-                    selectEl.classList.remove('text-white');
-                    selectEl.classList.add('text-gray-500');
-                  } else {
-                    showErrorToast(data.message || 'Error de seguridad. Por favor intente nuevamente.');
-                    grecaptcha.reset();
-                    
-                    btn.disabled = false;
-                    btnText.innerText = 'Solicitar Cotización';
-                    btnSpinner.classList.add('hidden');
-                    btnIcon.classList.remove('hidden');
-                  }
-                })
-                .catch(error => {
-                  console.error('Error:', error);
-                  showErrorToast('Ha ocurrido un problema al enviar la cotización. Verifique su conexión o intente más tarde.');
-                  btnText.innerText = 'Error al enviar';
-                  btnSpinner.classList.add('hidden');
-                  setTimeout(() => {
-                    btn.disabled = false;
-                    btnText.innerText = 'Solicitar Cotización';
-                    btnIcon.classList.remove('hidden');
-                  }, 3000);
-                });
-              });
-            </script>
+            <!-- Lógica de Envio de Formulario extraída a /assets/js/cotizacion.js -->
           </div>
         </div>
       </div>
@@ -237,5 +140,6 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
   <?php include '../includes/whatsapp.php'; ?>
 
   <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cotizacion.js"></script>
 </body>
 </html>
