@@ -86,11 +86,11 @@ $page_url = 'https://vigisolar.com/';
         <!-- Kit 1: 4.96 kWp -->
         <div class="bg-[#1a1a1a] border border-gray-800 rounded-2xl overflow-hidden hover:border-accent transition-colors duration-500 group flex flex-col md:flex-row h-full items-stretch">
           <div class="w-full md:w-2/5 h-64 md:h-auto">
-            <img src="/assets/img/hero/kit_1.jpeg" alt="Kit 4.96 kWp" class="w-full h-full object-cover">
+            <img src="/assets/img/hero/kit_1.jpeg" alt="Kit 1 (4.96 kWp)" class="w-full h-full object-cover">
           </div>
           <div class="p-8 flex flex-col w-full md:w-3/5">
             <div class="mb-6">
-              <h3 class="text-2xl font-bold text-white font-display mb-2">Kit Solar 4.96 kWp</h3>
+              <h3 class="text-2xl font-bold text-white font-display mb-2">Kit 1 <span class="text-xl font-medium text-gray-500 ml-2">4.96 kWp</span></h3>
               <p class="text-accent font-semibold text-lg">Ahorro hasta $140.00 / mes (627 kWh)</p>
             </div>
             <p class="text-gray-400 mb-6 text-sm">El sistema es "todo incluido" y conectado a la red. Precio desde <strong>$4,607.28</strong>.</p>
@@ -114,11 +114,11 @@ $page_url = 'https://vigisolar.com/';
           </div>
           <div class="w-full md:w-2/5 h-64 md:h-auto relative">
             <div class="absolute inset-0 bg-gradient-to-t from-[#240a0c] to-transparent z-10 md:hidden"></div>
-            <img src="/assets/img/hero/kit_2.jpeg" alt="Kit 7.44 kWp" class="w-full h-full object-cover">
+            <img src="/assets/img/hero/kit_2.jpeg" alt="Kit 2 (7.44 kWp)" class="w-full h-full object-cover">
           </div>
           <div class="p-8 md:p-10 flex flex-col w-full md:w-3/5 relative z-20">
             <div class="mb-6 mt-4 md:mt-0">
-              <h3 class="text-3xl font-extrabold text-white font-display mb-2">Kit Solar 7.44 kWp</h3>
+              <h3 class="text-3xl font-extrabold text-white font-display mb-2">Kit 2 <span class="text-2xl font-medium text-gray-500 ml-2">7.44 kWp</span></h3>
               <p class="text-accent font-semibold text-xl">Ahorro hasta $220.00 / mes (941 kWh)</p>
             </div>
             <p class="text-gray-300 mb-6 text-base font-medium">El sistema ideal para la mayoría de los hogares. "Todo incluido" y conectado a la red. Precio desde <span class="text-3xl font-bold text-white block mt-2">$6,100.09</span></p>
@@ -137,11 +137,11 @@ $page_url = 'https://vigisolar.com/';
         <!-- Kit 3: 9.92 kWp -->
         <div class="bg-[#1a1a1a] border border-gray-800 rounded-2xl overflow-hidden hover:border-accent transition-colors duration-500 group flex flex-col md:flex-row h-full items-stretch">
           <div class="w-full md:w-2/5 h-64 md:h-auto">
-            <img src="/assets/img/hero/kit_3.jpeg" alt="Kit 9.92 kWp" class="w-full h-full object-cover">
+            <img src="/assets/img/hero/kit_3.jpeg" alt="Kit 3 (9.92 kWp)" class="w-full h-full object-cover">
           </div>
           <div class="p-8 flex flex-col w-full md:w-3/5">
             <div class="mb-6">
-              <h3 class="text-2xl font-bold text-white font-display mb-2">Kit Solar 9.92 kWp</h3>
+              <h3 class="text-2xl font-bold text-white font-display mb-2">Kit 3 <span class="text-xl font-medium text-gray-500 ml-2">9.92 kWp</span></h3>
               <p class="text-accent font-semibold text-lg">Ahorro hasta $300.00 / mes (1255 kWh)</p>
             </div>
             <p class="text-gray-400 mb-6 text-sm">El sistema es "todo incluido" y conectado a la red. Precio desde <strong>$7,684.59</strong>.</p>
@@ -160,11 +160,11 @@ $page_url = 'https://vigisolar.com/';
         <!-- Kit 4: 12.40 kWp -->
         <div class="bg-[#1a1a1a] border border-gray-800 rounded-2xl overflow-hidden hover:border-accent transition-colors duration-500 group flex flex-col md:flex-row-reverse h-full items-stretch">
           <div class="w-full md:w-2/5 h-64 md:h-auto">
-            <img src="/assets/img/hero/kit_4.jpeg" alt="Kit 12.40 kWp" class="w-full h-full object-cover">
+            <img src="/assets/img/hero/kit_4.jpeg" alt="Kit 4 (12.40 kWp)" class="w-full h-full object-cover">
           </div>
           <div class="p-8 flex flex-col w-full md:w-3/5">
             <div class="mb-6 mt-4 md:mt-0">
-              <h3 class="text-2xl font-bold text-white font-display mb-2">Kit Solar 12.40 kWp</h3>
+              <h3 class="text-2xl font-bold text-white font-display mb-2">Kit 4 <span class="text-xl font-medium text-gray-500 ml-2">12.40 kWp</span></h3>
               <p class="text-accent font-semibold text-lg">Ahorro hasta $400.00 / mes (1569 kWh)</p>
             </div>
             <p class="text-gray-400 mb-6 text-sm">El sistema es "todo incluido" y conectado a la red. Precio desde <strong>$9,745.60</strong>.</p>
@@ -183,11 +183,11 @@ $page_url = 'https://vigisolar.com/';
         <!-- Kit 5: 14.88 kWp -->
         <div class="bg-[#1a1a1a] border border-gray-800 rounded-2xl overflow-hidden hover:border-accent transition-colors duration-500 group flex flex-col md:flex-row h-full items-stretch">
           <div class="w-full md:w-2/5 h-64 md:h-auto">
-            <img src="/assets/img/hero/kit_5.jpeg" alt="Kit 14.88 kWp" class="w-full h-full object-cover">
+            <img src="/assets/img/hero/kit_5.jpeg" alt="Kit 5 (14.88 kWp)" class="w-full h-full object-cover">
           </div>
           <div class="p-8 flex flex-col w-full md:w-3/5">
             <div class="mb-6">
-              <h3 class="text-2xl font-bold text-white font-display mb-2">Kit Solar 14.88 kWp</h3>
+              <h3 class="text-2xl font-bold text-white font-display mb-2">Kit 5 <span class="text-xl font-medium text-gray-500 ml-2">14.88 kWp</span></h3>
               <p class="text-accent font-semibold text-lg">Ahorro hasta $490.00 / mes (1882 kWh)</p>
             </div>
             <p class="text-gray-400 mb-6 text-sm">El sistema es "todo incluido" y conectado a la red. Precio desde <strong>$11,174.65</strong>.</p>

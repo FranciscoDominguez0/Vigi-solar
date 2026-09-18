@@ -8,11 +8,11 @@ $page_url = 'https://vigisolar.com/cotizacion/';
 
 $kit_seleccionado = isset($_GET['kit']) ? $_GET['kit'] : '';
 $kit_opciones = [
-  'Kit-4.96kWp' => 'Kit Solar 4.96 kWp',
-  'Kit-7.44kWp' => 'Kit Solar 7.44 kWp',
-  'Kit-9.92kWp' => 'Kit Solar 9.92 kWp',
-  'Kit-12.40kWp' => 'Kit Solar 12.40 kWp',
-  'Kit-14.88kWp' => 'Kit Solar 14.88 kWp'
+  'Kit-4.96kWp' => 'Kit 1 (4.96 kWp)',
+  'Kit-7.44kWp' => 'Kit 2 (7.44 kWp)',
+  'Kit-9.92kWp' => 'Kit 3 (9.92 kWp)',
+  'Kit-12.40kWp' => 'Kit 4 (12.40 kWp)',
+  'Kit-14.88kWp' => 'Kit 5 (14.88 kWp)'
 ];
 $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opciones[$kit_seleccionado] : '';
 ?>
@@ -57,13 +57,13 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
               <span id="custom-error-message"></span>
             </div>
 
-            <!-- Mensaje de Éxito (Oculto por defecto) -->
-            <div id="success-message" class="hidden flex-col items-center justify-center p-8 text-center">
-              <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center text-green-500 mb-6 animate-bounce">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <!-- Alerta Personalizada de Éxito (Toast) -->
+            <div id="custom-success-toast" class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-5 py-3 rounded-md shadow-[0_0_20px_rgba(22,163,74,0.6)] font-medium text-sm flex items-center z-50 transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px] w-11/12 md:w-auto md:max-w-md text-center">
+              <svg class="w-6 h-6 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <div class="text-left">
+                <strong class="block text-base">¡Cotización Enviada!</strong>
+                <span id="custom-success-message">Hemos recibido tu solicitud exitosamente. Un especialista se pondrá en contacto a la brevedad.</span>
               </div>
-              <h3 class="text-3xl font-bold text-white mb-4">¡Cotización Enviada!</h3>
-              <p class="text-gray-400 text-lg">Hemos recibido tu solicitud exitosamente. Un especialista de VIGITEC se pondrá en contacto contigo a la brevedad.</p>
             </div>
 
             <form id="cotizacion-form" class="space-y-5 transition-opacity duration-300" action="/enviar.php" method="POST">
@@ -73,25 +73,32 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
                   <input type="text" name="Nombre" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Nombre Completo*" required>
                 </div>
                 <div>
-                  <input type="tel" name="Teléfono" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Teléfono*" required>
+                  <input type="text" name="Cédula" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Cédula*" required>
                 </div>
               </div>
               
               <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <input type="email" name="Email" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Correo Electrónico*" required>
+                  <input type="tel" name="Teléfono" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Teléfono*" required>
                 </div>
                 <div>
+                  <input type="email" name="Email" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Correo Electrónico*" required>
+                </div>
+              </div>
+
+              <div>
+                <input type="text" name="Dirección" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Dirección Exacta*" required>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
                   <select id="servicio-select" name="Servicio" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner appearance-none cursor-pointer text-gray-500 focus:text-white font-medium rounded" required onchange="this.classList.remove('text-gray-500'); this.classList.add('text-white');">
-                    <option value="" disabled <?= empty($opcion_preseleccionada) ? 'selected' : '' ?>>Servicio de Interés*</option>
-                    <option class="text-white" <?= $opcion_preseleccionada === 'Kit Solar 4.96 kWp' ? 'selected' : '' ?>>Kit Solar 4.96 kWp</option>
-                    <option class="text-white" <?= $opcion_preseleccionada === 'Kit Solar 7.44 kWp' ? 'selected' : '' ?>>Kit Solar 7.44 kWp</option>
-                    <option class="text-white" <?= $opcion_preseleccionada === 'Kit Solar 9.92 kWp' ? 'selected' : '' ?>>Kit Solar 9.92 kWp</option>
-                    <option class="text-white" <?= $opcion_preseleccionada === 'Kit Solar 12.40 kWp' ? 'selected' : '' ?>>Kit Solar 12.40 kWp</option>
-                    <option class="text-white" <?= $opcion_preseleccionada === 'Kit Solar 14.88 kWp' ? 'selected' : '' ?>>Kit Solar 14.88 kWp</option>
-                    <option class="text-white">Cotización Personalizada</option>
-                    <option class="text-white">Mantenimiento</option>
-                    <option class="text-white">Otro</option>
+                    <option value="" disabled <?= empty($opcion_preseleccionada) ? 'selected' : '' ?>>Kit Elegido*</option>
+                    <option value="Kit 1 (4.96 kWp)" class="text-white" <?= $opcion_preseleccionada === 'Kit 1 (4.96 kWp)' ? 'selected' : '' ?>>Kit 1 (4.96 kWp)</option>
+                    <option value="Kit 2 (7.44 kWp)" class="text-white" <?= $opcion_preseleccionada === 'Kit 2 (7.44 kWp)' ? 'selected' : '' ?>>Kit 2 (7.44 kWp)</option>
+                    <option value="Kit 3 (9.92 kWp)" class="text-white" <?= $opcion_preseleccionada === 'Kit 3 (9.92 kWp)' ? 'selected' : '' ?>>Kit 3 (9.92 kWp)</option>
+                    <option value="Kit 4 (12.40 kWp)" class="text-white" <?= $opcion_preseleccionada === 'Kit 4 (12.40 kWp)' ? 'selected' : '' ?>>Kit 4 (12.40 kWp)</option>
+                    <option value="Kit 5 (14.88 kWp)" class="text-white" <?= $opcion_preseleccionada === 'Kit 5 (14.88 kWp)' ? 'selected' : '' ?>>Kit 5 (14.88 kWp)</option>
                   </select>
                   <?php if (!empty($opcion_preseleccionada)): ?>
                   <script>
@@ -100,10 +107,9 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
                   </script>
                   <?php endif; ?>
                 </div>
-              </div>
-              
-              <div>
-                <textarea rows="4" name="Detalles" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner resize-none placeholder-gray-500 font-medium rounded" placeholder="Mensaje...*" required></textarea>
+                <div>
+                  <input type="number" name="Anos" class="w-full p-4 bg-[#111111] border border-gray-700 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner placeholder-gray-500 font-medium rounded" placeholder="Años a Financiar (Ej. 1)*" min="1" required>
+                </div>
               </div>
               
               <!-- reCAPTCHA Oficial de Google -->
@@ -136,6 +142,18 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
                   toast.classList.remove('opacity-100', 'translate-y-0');
                   toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
                 }, 4000);
+              }
+
+              function showSuccessToast() {
+                const toast = document.getElementById('custom-success-toast');
+                
+                toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+                toast.classList.add('opacity-100', 'translate-y-0');
+                
+                setTimeout(() => {
+                  toast.classList.remove('opacity-100', 'translate-y-0');
+                  toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+                }, 5000);
               }
 
               document.getElementById('cotizacion-form').addEventListener('submit', function(e) {
@@ -172,11 +190,20 @@ $opcion_preseleccionada = isset($kit_opciones[$kit_seleccionado]) ? $kit_opcione
                 .then(response => response.json())
                 .then(data => {
                   if (data.success) {
-                    form.style.opacity = '0';
-                    setTimeout(() => {
-                      form.classList.add('hidden');
-                      successMessage.classList.remove('hidden');
-                    }, 300);
+                    showSuccessToast();
+                    form.reset();
+                    grecaptcha.reset();
+                    
+                    // Restaurar botón
+                    btn.disabled = false;
+                    btnText.innerText = 'Solicitar Cotización';
+                    btnSpinner.classList.add('hidden');
+                    btnIcon.classList.remove('hidden');
+                    
+                    // Restaurar color del select
+                    const selectEl = document.getElementById('servicio-select');
+                    selectEl.classList.remove('text-white');
+                    selectEl.classList.add('text-gray-500');
                   } else {
                     showErrorToast(data.message || 'Error de seguridad. Por favor intente nuevamente.');
                     grecaptcha.reset();
