@@ -224,7 +224,7 @@ try {
     $finanzas = calcularFinanciamiento($servicio, $anos);
     $htmlMensaje = generarTemplateCorreo($cliente, $servicio, $finanzas);
 
-    $correoDestino = getenv('SMTP_DESTINATION') ?: 'info@vigisolar.com';
+    $correoDestino = getenv('SMTP_DESTINATION') ?: 'info@vigitecpanama.com';
     $asunto = 'NUEVA SOLICITUD DE COTIZACIÓN - Vigi-Solar';
     
     if (enviarCorreoResend($resendApiKey, $correoDestino, '', $asunto, $htmlMensaje)) {

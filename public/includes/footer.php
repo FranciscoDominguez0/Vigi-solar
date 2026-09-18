@@ -35,8 +35,10 @@
             +507 6933-0534
           </li>
           <li class="flex items-start">
-            <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-            info@vigisolar.com
+            <svg class="w-5 h-5 text-accent mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <a href="mailto:info@vigitecpanama.com" class="hover:text-white transition-colors">
+            info@vigitecpanama.com
+            </a>
           </li>
           <li class="flex items-start">
             <a href="https://www.instagram.com/vigitecpanama/" target="_blank" rel="noopener noreferrer" class="flex items-start hover:text-white transition-colors group">
